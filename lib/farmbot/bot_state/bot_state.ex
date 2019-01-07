@@ -378,6 +378,12 @@ defmodule Farmbot.BotState do
     do_handle(rest, new_state)
   end
 
+  defp do_handle([{:config, "settings", "currently_on_beta", bool} | rest], state) do
+    new_info = Map.put(state.informational_settings, :currently_on_beta, bool)
+    new_state = %{state | informational_settings: new_info}
+    do_handle(rest, new_state)
+  end
+
   defp do_handle([{:config, "settings", key, val} | rest], state) do
     # Logger.debug 1, "Got config update: #{inspect key} => #{inspect val}"
     new_config = Map.put(state.configuration, key, val)
